@@ -1,4 +1,7 @@
-package modelo;
+package controle;
+
+import modelo.Empresa;
+import modelo.Funcionario;
 
 import java.util.Objects;
 
