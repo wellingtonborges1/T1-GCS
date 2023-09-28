@@ -26,10 +26,6 @@ public class Funcionario {
         return departamento;
     }
 
-    public boolean isEstaLogado() {
-        return estaLogado;
-    }
-
     public boolean getLog() {
         return estaLogado;
     }
