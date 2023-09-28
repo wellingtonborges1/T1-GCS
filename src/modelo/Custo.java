@@ -45,7 +45,7 @@ public class Custo {
                 ", descricao='" + descricao + '\'' +
                 ", data=" + data +
                 ", categoria='" + categoria + '\'' +
-                ", departamento=" + departamento +
+                ", departamento=" + departamento.getNome() +
                 '}';
     }
 }
