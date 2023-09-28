@@ -1,4 +1,4 @@
-package controle;
+package app;
 
 import java.util.Date;
 
@@ -12,8 +12,8 @@ import modelo.Funcionario;
 public class Sistema {
     Empresa empresa;
 
-    public Sistema(Empresa empresa) {
-        this.empresa = empresa;
+    public Sistema() {
+        this.empresa = new Empresa();
         Departamento rh = new Departamento("RH");
         Departamento compras = new Departamento("compras");
         Departamento vendas = new Departamento("vendas");
