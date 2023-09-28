@@ -11,6 +11,7 @@ public class Funcionario {
         this.matricula = matricula;
         this.nome = nome;
         this.departamento = departamento;
+        estaLogado = false;
     }
 
     public Integer getMatricula() {
@@ -29,14 +30,12 @@ public class Funcionario {
         return estaLogado;
     }
 
-    public boolean logar() {
-        if(estaLogado) {
-            estaLogado=false;
-            return false;
-        } else {
-            estaLogado=true;
-            return true;
-        }
+    public boolean getLog() {
+        return estaLogado;
+    }
+
+    public boolean setLog(boolean valor) { 
+        return this.estaLogado = valor;
     }
 
     @Override
