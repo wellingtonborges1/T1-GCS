@@ -1,5 +1,6 @@
 package controle;
 
+import modelo.Departamento;
 import modelo.Empresa;
 import modelo.Funcionario;
 
@@ -10,7 +11,12 @@ public class Sistema {
 
     public Sistema(Empresa empresa) {
         this.empresa = empresa;
-    }
+        Departamento rh = new Departamento("RH");
+        Departamento compras = new Departamento("compras");
+        Departamento vendas = new Departamento("vendas");
+        Departamento ti = new Departamento("TI");
+        Departamento engenharia = new Departamento("engenharia");
+        }
 
     public void adicionarFuncionario(Funcionario funcionario){
         for(Funcionario f : empresa.getFuncionarios()){
