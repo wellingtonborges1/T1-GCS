@@ -1,6 +1,7 @@
 package app;
 
-import java.util.Date;
+import java.lang.reflect.GenericArrayType;
+import java.util.*;
 
 import javax.xml.crypto.Data;
 
@@ -75,8 +76,10 @@ public class Sistema {
     //MANIPULACAO DOS CUSTOS
 
     public void adicionarCusto(Funcionario funcionario, Custo custo) {
-        if(funcionario.getLog())
+        if(funcionario.getLog()) {
             funcionario.getDepartamento().getCustos().add(custo);
+            empresa.getCustosTotais().add(custo);
+        }
         else
             System.out.println("Funcionário não está logado");
     }
@@ -95,5 +98,44 @@ public class Sistema {
         for (Custo custo : d.getCustos()) {
             System.out.println(custo.toString());
         }
+    }
+    public ArrayList<Custo> pesquisaCustoDescricao(String descricao) {
+        ArrayList<Custo> custos = new ArrayList<>();
+        for(Custo custo : empresa.getCustosTotais()){
+            if(custo.getDescricao().equals(descricao) )
+                custos.add(custo);
+        }
+        custos.sort(Comparator.comparing(Custo::getData));
+        return custos;
+    }
+
+    public ArrayList<Custo> pesquisaCustoCategoria(String categoria) {
+        ArrayList<Custo> custos = new ArrayList<>();
+        for(Custo custo : empresa.getCustosTotais()){
+            if(custo.getCategoria().equals(categoria))
+                custos.add(custo);
+        }
+        custos.sort(Comparator.comparing(Custo::getData));
+        return custos;
+    }
+
+    public ArrayList<Custo> pesquisaCustoData(Date data) {
+        ArrayList<Custo> custos = new ArrayList<>();
+        for(Custo custo : empresa.getCustosTotais()){
+            if(custo.getData().equals(data))
+                custos.add(custo);
+        }
+        custos.sort(Comparator.comparing(Custo::getData));
+        return custos;
+    }
+
+    public ArrayList<Custo> pesquisaCustoDepartamento(Departamento departamento) {
+        ArrayList<Custo> custos = new ArrayList<>();
+        for(Custo custo : empresa.getCustosTotais()){
+            if(custo.getDepartamento().equals(departamento))
+                custos.add(custo);
+        }
+        custos.sort(Comparator.comparing(Custo::getData));
+        return custos;
     }
 }

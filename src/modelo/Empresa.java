@@ -22,4 +22,8 @@ public class Empresa {
     public List<Departamento> getDepartamentos() {
         return departamentos;
     }
+
+    public List<Custo> getCustosTotais() {
+        return custosTotais;
+    }
 }
