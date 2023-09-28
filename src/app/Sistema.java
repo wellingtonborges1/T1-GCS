@@ -1,17 +1,15 @@
-package controle;
+package app;
 
 import modelo.Custo;
 import modelo.Departamento;
 import modelo.Empresa;
 import modelo.Funcionario;
 
-import java.util.Objects;
-
 public class Sistema {
     Empresa empresa;
 
-    public Sistema(Empresa empresa) {
-        this.empresa = empresa;
+    public Sistema() {
+        this.empresa = new Empresa();
         Departamento rh = new Departamento("RH");
         Departamento compras = new Departamento("compras");
         Departamento vendas = new Departamento("vendas");
