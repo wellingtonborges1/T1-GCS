@@ -1,4 +1,4 @@
-package controle;
+package app;
 
 import java.util.Date;
 
@@ -12,8 +12,8 @@ import modelo.Funcionario;
 public class Sistema {
     Empresa empresa;
 
-    public Sistema(Empresa empresa) {
-        this.empresa = empresa;
+    public Sistema() {
+        this.empresa = new Empresa();
         Departamento rh = new Departamento("RH");
         Departamento compras = new Departamento("compras");
         Departamento vendas = new Departamento("vendas");
@@ -77,7 +77,6 @@ public class Sistema {
     public void adicionarCusto(Funcionario funcionario, Custo custo) {
         if(funcionario.getLog())
             funcionario.getDepartamento().getCustos().add(custo);
-            empresa.getListaCustos.add(custo);
         else
             System.out.println("Funcionário não está logado");
     }

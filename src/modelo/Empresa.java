@@ -8,6 +8,7 @@ public class Empresa {
     private List<Funcionario> funcionarios;
     private List<Departamento> departamentos;
     private List<Custo> custosTotais;
+
     public Empresa(){
         this.funcionarios = new ArrayList<>();
         this.departamentos = new ArrayList<>();
@@ -20,5 +21,9 @@ public class Empresa {
 
     public List<Departamento> getDepartamentos() {
         return departamentos;
+    }
+
+    public List<Custo> getListaCustos() {
+        return custosTotais;
     }
 }
