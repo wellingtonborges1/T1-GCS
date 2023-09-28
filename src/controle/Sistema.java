@@ -20,4 +20,10 @@ public class Sistema {
         empresa.getFuncionarios().add(funcionario);
         funcionario.getDepartamento().getFuncionarios().add(funcionario);
     }
+
+    public void todosFuncionarios() {
+        for (Funcionario funcionario : empresa.getFuncionarios()) {
+            System.out.println(funcionario.toString());
+        }
+    }
 }

@@ -29,7 +29,7 @@ public class Funcionario {
         return "Funcionario{" +
                 "matricula=" + matricula +
                 ", nome='" + nome + '\'' +
-                ", departamento=" + departamento +
+                ", departamento=" + departamento.getNome() +
                 '}';
     }
 }
