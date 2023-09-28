@@ -1,5 +1,6 @@
 package controle;
 
+import modelo.Custo;
 import modelo.Departamento;
 import modelo.Empresa;
 import modelo.Funcionario;
@@ -16,15 +17,22 @@ public class Sistema {
         Departamento vendas = new Departamento("vendas");
         Departamento ti = new Departamento("TI");
         Departamento engenharia = new Departamento("engenharia");
-        }
+    }
 
     public void adicionarFuncionario(Funcionario funcionario){
         for(Funcionario f : empresa.getFuncionarios()){
-            if(Objects.equals(f.getMatricula(), funcionario.getMatricula()))
-                throw new IllegalArgumentException("Funcionário já existe na empresa");
+            if(f.getMatricula() == funcionario.getMatricula())
+                System.out.println("Funcionário já existe na empresa");
         }
         empresa.getFuncionarios().add(funcionario);
         funcionario.getDepartamento().getFuncionarios().add(funcionario);
+    }
+
+    public void adicionarCusto(Funcionario funcionario, Custo custo) {
+        if(funcionario.isEstaLogado())
+            funcionario.getDepartamento().getCustos().add(custo);
+       else
+            System.out.println("Funcionário não está logado");
     }
 
     public void todosFuncionarios() {
