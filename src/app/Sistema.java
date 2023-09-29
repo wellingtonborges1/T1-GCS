@@ -5,7 +5,6 @@ import modelo.Departamento;
 import modelo.Empresa;
 import modelo.Funcionario;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -15,14 +14,14 @@ public class Sistema {
     Empresa empresa;
     Scanner sc;
 
-    public Sistema(Empresa empresa) {
-        this.empresa = empresa;
+    public Sistema() {
+        this.empresa = new Empresa();
         sc = new Scanner(System.in);
-        Departamento rh = new Departamento("RH");
-        Departamento compras = new Departamento("compras");
-        Departamento vendas = new Departamento("vendas");
-        Departamento ti = new Departamento("TI");
-        Departamento engenharia = new Departamento("engenharia");
+        empresa.getDepartamentos().add(new Departamento("RH"));
+        empresa.getDepartamentos().add(new Departamento("compras"));
+        empresa.getDepartamentos().add(new Departamento("vendas"));
+        empresa.getDepartamentos().add(new Departamento("TI"));
+        empresa.getDepartamentos().add(new Departamento("engenharia"));
     }
 
     public void executa() {
@@ -32,19 +31,30 @@ public class Sistema {
             opcao = sc.nextInt();
             sc.nextLine();
 
+            int matricula;
             switch (opcao) {
                 case 1:
-                    funcionarioLogado();
+                    System.out.println("Informe a matrícula do funcionário para logar");
+                    matricula = sc.nextInt();
+                    sc.nextLine();
+                    logar(matricula);
                     break;
                 case 2:
                     System.out.println("Informe a matrícula do funcionário");
-                    int matricula = sc.nextInt();
+                    matricula = sc.nextInt();
                     sc.nextLine();
                     System.out.println("Informe o nome do funcionário");
                     String nome = sc.nextLine();
-                    System.out.println("Informe o departamento do funcionário");
-                    //pesquisar departamento
-                    //adicionar funcionário
+
+                    Departamento d;
+                    //repete se o departamento passado nao existir
+                    do {
+                        System.out.println("Informe o nome do departamento do funcionário");
+                        String nomeDepartamento = sc.nextLine();
+                        d = pesquisarDepartamento(nomeDepartamento);
+                    } while(d == null);
+
+                    adicionarFuncionario(new Funcionario(matricula, nome, d));
                     break;
                 case 3:
                     System.out.println("insira o ");
@@ -68,19 +78,19 @@ public class Sistema {
                         switch(op){
 
                             case 1:
-                            int pesqData = pesquisaCustoData();
-                            break;
+                                //int pesqData = pesquisaCustoData();
+                                //break;
 
                             case 2:
-                                String pesqDesc = pesquisaCustoDescricao();
+                                //String pesqDesc = pesquisaCustoDescricao();
                                 break;
 
                             case 3:
-                                String pesqDepart = pesquisaCustoDepartamento();
+                                //String pesqDepart = pesquisaCustoDepartamento();
                                 break;
 
                             case 4:
-                                String pesqCateg = pesquisaCustoCategoria();
+                                //String pesqCateg = pesquisaCustoCategoria();
                                 break;
 
 
@@ -145,7 +155,7 @@ public class Sistema {
         System.out.println("--------------------------------------------");
     }
 
-    public void adicionarFuncionario(Funcionario funcionario){
+    private void adicionarFuncionario(Funcionario funcionario){
         for(Funcionario f : empresa.getFuncionarios()){
             if(f.getMatricula() == funcionario.getMatricula())
                 System.out.println("Funcionário já existe na empresa");
@@ -154,13 +164,13 @@ public class Sistema {
         funcionario.getDepartamento().getFuncionarios().add(funcionario);
     }
 
-    public void todosFuncionarios() {
+    private void todosFuncionarios() {
         for (Funcionario funcionario : empresa.getFuncionarios()) {
             System.out.println(funcionario.toString());
         }
     }
 
-    public boolean isLogged(Funcionario f) {
+    private boolean isLogged(Funcionario f) {
         if(f.getLog()) {
             return true;
         } else {
@@ -168,7 +178,7 @@ public class Sistema {
         }
     }
 
-    public Funcionario funcionarioLogado() {
+    private Funcionario funcionarioLogado() {
         Funcionario f = null;
         for (Funcionario funcionario : empresa.getFuncionarios()) {
             if(funcionario.getLog()) {
@@ -178,15 +188,20 @@ public class Sistema {
         return f;
     }
 
-    public boolean logar(Funcionario f) {
+    private boolean logar(int matricula) {
+        Funcionario f = pesquisarFuncionario(matricula);
+        //verifica se a lista esta vazia
+        if(empresa.getFuncionarios().isEmpty()) {
+            System.out.println("Não existe nenhum funcionário na empresa.");
+            return false;
+        }
         if(f.getLog()) {
            System.out.println("Este Funcionario ja esta logado!");
            return true;
         } else {
             for (Funcionario funcionario : empresa.getFuncionarios()) {
-                if(isLogged(funcionario)) {
+                if(isLogged(funcionario))
                     funcionario.setLog(false);
-                }
             }
         }
         System.out.println("Funcionario logado com sucesso!");
@@ -194,9 +209,28 @@ public class Sistema {
         return true;
     }
 
+    private Funcionario pesquisarFuncionario(int matricula) {
+        for(Funcionario f : empresa.getFuncionarios()) {
+            if(f.getMatricula() == matricula)
+                return f;
+        }
+        return null;
+    }
+
+    //MANIPULACAO DE DEPARTAMENTOS
+
+    private Departamento pesquisarDepartamento(String nome) {
+        for(Departamento d : empresa.getDepartamentos()) {
+            if(d.getNome().equals(nome))
+                return d;
+        }
+        System.out.println("Departamento inexistente. Tente novamente");
+        return null;
+    }
+
     //MANIPULACAO DOS CUSTOS
 
-    public void adicionarCusto(Funcionario funcionario, Custo custo) {
+    private void adicionarCusto(Funcionario funcionario, Custo custo) {
         if(funcionario.getLog()) {
             funcionario.getDepartamento().getCustos().add(custo);
             empresa.getCustosTotais().add(custo);
@@ -205,7 +239,7 @@ public class Sistema {
             System.out.println("Funcionário não está logado");
     }
 
-    public void removerCusto(Departamento d) {
+    private void removerCusto(Departamento d) {
         Custo x = new Custo(0, null, new Date(50000, 01, 1), null, d);
         for (Custo custo : d.getCustos()) {
             if(custo.getData().compareTo(x.getData()) <0) {
@@ -215,22 +249,25 @@ public class Sistema {
         d.getCustos().remove(x);
     }
 
-    public void todosCustos(Departamento d) {
+    private void todosCustos(Departamento d) {
         for (Custo custo : d.getCustos()) {
             System.out.println(custo.toString());
         }
     }
-    public <T> ArrayList<Custo> pesquisaCusto(T elemento) {
-        ArrayList<Custo> custos = new ArrayList<>();
-        for(Custo custo : empresa.getCustosTotais()){
-            if(custo.getDescricao().equals(descricao) )
-                custos.add(custo);
-        }
-        custos.sort(Comparator.comparing(Custo::getData));
-        return custos;
-    }
 
-    public ArrayList<Custo> pesquisaCustoCategoria(String categoria) {
+    //ARRUMAR:
+
+//    public <T> ArrayList<Custo> pesquisaCusto(T elemento) {
+//        ArrayList<Custo> custos = new ArrayList<>();
+//        for(Custo custo : empresa.getCustosTotais()){
+//            if(custo.getDescricao().equals(descricao) )
+//                custos.add(custo);
+//        }
+//        custos.sort(Comparator.comparing(Custo::getData));
+//        return custos;
+//    }
+
+    private ArrayList<Custo> pesquisaCustoCategoria(String categoria) {
         ArrayList<Custo> custos = new ArrayList<>();
         for(Custo custo : empresa.getCustosTotais()){
             if(custo.getCategoria().equals(categoria))
@@ -240,7 +277,7 @@ public class Sistema {
         return custos;
     }
 
-    public ArrayList<Custo> pesquisaCustoData(Date data) {
+    private ArrayList<Custo> pesquisaCustoData(Date data) {
         ArrayList<Custo> custos = new ArrayList<>();
         for(Custo custo : empresa.getCustosTotais()){
             if(custo.getData().equals(data))
@@ -250,29 +287,13 @@ public class Sistema {
         return custos;
     }
 
-    public ArrayList<Custo> pesquisaCustoDepartamento(Departamento departamento) {
-        ArrayList<Custo> custos = new ArrayList<>();
-        for(Custo custo : empresa.getCustosTotais()){
-            if(custo.getDepartamento().equals(departamento))
-                custos.add(custo);
-        }
-        return custos;
-    }
-
-    public <T> ArrayList<Custo> pesquisaCusto(T elemento) {
-        ArrayList<Custo> listas = new ArrayList();
-        if(elemento instanceof String) {
-            for (Custo custo : empresa.getCustosTotais()) {
-                if(custo.getCategoria().equals(elemento) || custo.getDescricao().equals(elemento)) {
-                    listas.add(custo);
-                }
-            }
-        } else if (elemento instanceof Date) {
-
-        } else if(elemento instanceof Departamento) {
-
-        }
-        return null;
-    }
+//    public ArrayList<Custo> pesquisaCustoDepartamento(Departamento departamento) {
+//        ArrayList<Custo> custos = new ArrayList<>();
+//        for(Custo custo : empresa.getCustosTotais()){
+//            if(custo.getDepartamento().equals(departamento))
+//                custos.add(custo);
+//        }
+//        return custos;
+//    }
 }
 
