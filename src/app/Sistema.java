@@ -14,8 +14,8 @@ public class Sistema {
     Empresa empresa;
     Scanner sc;
 
-    public Sistema(Empresa empresa) {
-        this.empresa = empresa;
+    public Sistema() {
+        this.empresa = new Empresa();
         sc = new Scanner(System.in);
         Departamento rh = new Departamento("RH");
         Departamento compras = new Departamento("compras");
@@ -32,13 +32,17 @@ public class Sistema {
             opcao = sc.nextInt();
             sc.nextLine();
 
+            int matricula;
             switch (opcao) {
                 case 1:
-                    funcionarioLogado();
+                    System.out.println("Informe a matrícula do funcionário para logar");
+                    matricula = sc.nextInt();
+                    sc.nextLine();
+                    logar(matricula);
                     break;
                 case 2:
                     System.out.println("Informe a matrícula do funcionário");
-                    int matricula = sc.nextInt();
+                    matricula = sc.nextInt();
                     sc.nextLine();
                     System.out.println("Informe o nome do funcionário");
                     String nome = sc.nextLine();
@@ -81,7 +85,7 @@ public class Sistema {
         System.out.println("--------------------------------------------");
     }
 
-    public void adicionarFuncionario(Funcionario funcionario){
+    private void adicionarFuncionario(Funcionario funcionario){
         boolean funcExistente = false;
 
         for(Funcionario f : empresa.getFuncionarios()){
@@ -97,13 +101,13 @@ public class Sistema {
         }
     }
 
-    public void todosFuncionarios() {
+    private void todosFuncionarios() {
         for (Funcionario funcionario : empresa.getFuncionarios()) {
             System.out.println(funcionario.toString());
         }
     }
 
-    public boolean isLogged(Funcionario f) {
+    private boolean isLogged(Funcionario f) {
         if(f.getLog()) {
             return true;
         } else {
@@ -111,7 +115,7 @@ public class Sistema {
         }
     }
 
-    public Funcionario funcionarioLogado() {
+    private Funcionario funcionarioLogado() {
         Funcionario f = null;
         for (Funcionario funcionario : empresa.getFuncionarios()) {
             if(funcionario.getLog()) {
@@ -121,7 +125,9 @@ public class Sistema {
         return f;
     }
 
-    public boolean logar(Funcionario f) {
+    private boolean logar(int matricula) {
+        Funcionario f = pesquisarFuncionario(matricula);
+
         if(f.getLog()) {
            System.out.println("Este Funcionario ja esta logado!");
            return true;
@@ -137,9 +143,17 @@ public class Sistema {
         return true;
     }
 
+    private Funcionario pesquisarFuncionario(int matricula) {
+        for(Funcionario f : empresa.getFuncionarios()) {
+            if(f.getMatricula() == matricula)
+                return f;
+        }
+        return null;
+    }
+
     //MANIPULACAO DOS CUSTOS
 
-    public void adicionarCusto(Funcionario funcionario, Custo custo) {
+    private void adicionarCusto(Funcionario funcionario, Custo custo) {
         if(funcionario.getLog()) {
             funcionario.getDepartamento().getCustos().add(custo);
             empresa.getCustosTotais().add(custo);
@@ -148,7 +162,7 @@ public class Sistema {
             System.out.println("Funcionário não está logado");
     }
 
-    public void removerCusto(Departamento d) {
+    private void removerCusto(Departamento d) {
         Custo x = new Custo(0, null, new Date("01/01/50000"), null, d);
         for (Custo custo : d.getCustos()) {
             if(custo.getData().compareTo(x.getData()) <0) {
@@ -158,12 +172,12 @@ public class Sistema {
         d.getCustos().remove(x);
     }
 
-    public void todosCustos(Departamento d) {
+    private void todosCustos(Departamento d) {
         for (Custo custo : d.getCustos()) {
             System.out.println(custo.toString());
         }
     }
-    public ArrayList<Custo> pesquisaCustoDescricao(String descricao) {
+    private ArrayList<Custo> pesquisaCustoDescricao(String descricao) {
         ArrayList<Custo> custos = new ArrayList<>();
         for(Custo custo : empresa.getCustosTotais()){
             if(custo.getDescricao().equals(descricao) )
@@ -173,7 +187,7 @@ public class Sistema {
         return custos;
     }
 
-    public ArrayList<Custo> pesquisaCustoCategoria(String categoria) {
+    private ArrayList<Custo> pesquisaCustoCategoria(String categoria) {
         ArrayList<Custo> custos = new ArrayList<>();
         for(Custo custo : empresa.getCustosTotais()){
             if(custo.getCategoria().equals(categoria))
@@ -183,7 +197,7 @@ public class Sistema {
         return custos;
     }
 
-    public ArrayList<Custo> pesquisaCustoData(Date data) {
+    private ArrayList<Custo> pesquisaCustoData(Date data) {
         ArrayList<Custo> custos = new ArrayList<>();
         for(Custo custo : empresa.getCustosTotais()){
             if(custo.getData().equals(data))
@@ -193,7 +207,7 @@ public class Sistema {
         return custos;
     }
 
-    public ArrayList<Custo> pesquisaCustoDepartamento(Departamento departamento) {
+    private ArrayList<Custo> pesquisaCustoDepartamento(Departamento departamento) {
         ArrayList<Custo> custos = new ArrayList<>();
         for(Custo custo : empresa.getCustosTotais()){
             if(custo.getDepartamento().equals(departamento))

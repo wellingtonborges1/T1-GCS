@@ -7,14 +7,14 @@ public class Funcionario {
     private Departamento departamento;
     private boolean estaLogado;
 
-    public Funcionario(Integer matricula, String nome, Departamento departamento) {
+    public Funcionario(int matricula, String nome, Departamento departamento) {
         this.matricula = matricula;
         this.nome = nome;
         this.departamento = departamento;
         estaLogado = false;
     }
 
-    public Integer getMatricula() {
+    public int getMatricula() {
         return matricula;
     }
 
