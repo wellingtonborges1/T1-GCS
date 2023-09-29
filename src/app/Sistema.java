@@ -48,7 +48,10 @@ public class Sistema {
                     break;
                 case 6:
                     metodo6();
-                        break;
+                    break;
+                case 9:
+                    imprimeTodosFuncionarios();
+                    break;
                 case 0:
                     //encerrando
                     break;
@@ -203,6 +206,7 @@ public class Sistema {
         System.out.println("4 - Pesquisar registro de custos");
         System.out.println("5 - Excluir registro de custo mais recente");
         System.out.println("6 - Consultar painel de dados");
+        System.out.println("9 - Lista de todos os funcionarios");
         System.out.println("0 - Sair");
         System.out.println("--------------------------------------------");
     }
@@ -352,5 +356,12 @@ public class Sistema {
         }
         custos.sort(Comparator.comparing(Custo::getData));
         return custos;
+    }
+
+        public void imprimeTodosFuncionarios(){
+        int i = 0;
+        for(Funcionario f : empresa.getFuncionarios()){
+            System.out.printf("%d: %s\n", i+1, f.getNome());
+        }
     }
 }
