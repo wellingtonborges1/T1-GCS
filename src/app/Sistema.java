@@ -30,109 +30,25 @@ public class Sistema {
             menu();
             opcao = sc.nextInt();
             sc.nextLine();
-
-            int matricula;
             switch (opcao) {
                 case 1:
-                    System.out.println("Informe a matrícula do funcionário para logar");
-                    matricula = sc.nextInt();
-                    sc.nextLine();
-                    logar(matricula);
+                    metodo1();
                     break;
                 case 2:
-                    System.out.println("Informe a matrícula do funcionário");
-                    matricula = sc.nextInt();
-                    sc.nextLine();
-                    System.out.println("Informe o nome do funcionário");
-                    String nome = sc.nextLine();
-
-                    Departamento d;
-                    //repete se o departamento passado nao existir
-                    do {
-                        System.out.println("Informe o nome do departamento do funcionário");
-                        String nomeDepartamento = sc.nextLine();
-                        d = pesquisarDepartamento(nomeDepartamento);
-                    } while(d == null);
-
-                    adicionarFuncionario(new Funcionario(matricula, nome, d));
+                    metodo2();
                     break;
                 case 3:
-                    System.out.println("insira o ");
-                    adicionarCusto(null, null);
+                    metodo3();
                     break;
                 case 4:
-                    //pesquisar custo
-                        System.out.println("""
-                                -----------------
-                                menu:
-                                
-                                1- pesquisa data
-                                2- pesquisa descricao
-                                3- pesquisa departamento
-                                4- pesquisa categoria
-                                5- fechar menu 
-                                -----------------
-                                """);
-                        int op = sc.nextInt();
-
-                        switch(op){
-
-                            case 1:
-                                //int pesqData = pesquisaCustoData();
-                                //break;
-
-                            case 2:
-                                //String pesqDesc = pesquisaCustoDescricao();
-                                break;
-
-                            case 3:
-                                //String pesqDepart = pesquisaCustoDepartamento();
-                                break;
-
-                            case 4:
-                                //String pesqCateg = pesquisaCustoCategoria();
-                                break;
-
-
-                            case 5:
-                                System.out.println("menu fechado");
-                                break;
-                        }
-
-
-
+                    metodo4();
                     break;
                 case 5:
-                    //excluir custo
-                    System.out.println("--------------------------------------------");
-                    System.out.println("Digite de qual departamento deseja excluir o custo:");
-                    System.out.println("1 - RH \n2 - Compras \n3 - Vendas \n4 - TI \n5 - Engenharia");
-                    System.out.println("--------------------------------------------");
-                    int opcao5= sc.nextInt();
-                    removerCusto(empresa.getDepartamentos().get(opcao5-1));
-                    todosCustos(empresa.getDepartamentos().get(opcao5-1));
+                    metodo5();
                     break;
                 case 6:
-                     //consultar painel
-                    System.out.println("--------------------------------------------");
-                    System.out.println("O que deseja consultar?");
-                    System.out.println("1 - Custos \n2 - Funcionários");
-                    System.out.println("--------------------------------------------");
-                    int consultas= sc.nextInt();
-                    switch(consultas){
-                        case 1:
-                        System.out.println("--------------------------------------------");
-                        System.out.println("Digite qual departamento deseja consultar:");
-                        System.out.println("1 - RH \n2 - Compras \n3 - Vendas \n4 - TI \n5 - Engenharia");
-                        System.out.println("--------------------------------------------");
-                        int opcao6= sc.nextInt();
-                        todosCustos(empresa.getDepartamentos().get(opcao6-1));
+                    metodo6();
                         break;
-                        case 2:
-                        todosFuncionarios();
-                        break;
-                    }
-                break;
                 case 0:
                     //encerrando
                     break;
@@ -143,12 +59,148 @@ public class Sistema {
         } while(opcao != 0);
     }
 
+    private void metodo1(){
+        System.out.println("Informe a matrícula do funcionário para logar");
+        int matricula = sc.nextInt();
+        sc.nextLine();
+        logar(matricula);
+    }
+
+    private void metodo2(){
+        System.out.println("Informe a matrícula do funcionário");
+        int matricula = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Informe o nome do funcionário");
+        String nome = sc.nextLine();
+
+        Departamento d;
+        //repete se o departamento passado nao existir
+        do {
+            System.out.println("Informe o nome do departamento do funcionário");
+            String nomeDepartamento = sc.nextLine();
+            d = pesquisarDepartamento(nomeDepartamento);
+        } while(d == null);
+
+        adicionarFuncionario(new Funcionario(matricula, nome, d));
+    }
+
+    private void metodo3() {
+        System.out.println("insira o ");
+        adicionarCusto(null, null);
+    }
+
+    private void metodo4() {
+        boolean valido;
+        do {
+            valido = true;
+            System.out.println("--------------------------------------------");
+            System.out.println("0- Voltar");
+            System.out.println("1- Pesquisar custo por categoria");
+            System.out.println("2- Pesquisar custo por descrição");
+            System.out.println("3- Pesquisar custo por departamento ");
+            System.out.println("4- Pesquisar custo por data");
+            System.out.println("--------------------------------------------");
+            ArrayList<Custo> custos;
+            switch (sc.nextInt()) {
+                case 0:
+                    break;
+
+                case 1:
+                    System.out.println("Digite a categoria que deseja buscar: ");
+                    custos = pesquisaCustoCategoria(sc.nextLine());
+                    System.out.println(custos);
+                    break;
+
+                case 2:
+                    System.out.println("Digite a descrição que deseja buscar: ");
+                    custos = pesquisaCustoCategoria(sc.nextLine());
+                    System.out.println(custos);
+                    break;
+
+                case 3:
+                    System.out.println("Digite o nome do departamento que deseja buscar: ");
+                    custos = pesquisaCustoCategoria(sc.nextLine());
+                    System.out.println(custos);
+                    break;
+
+                case 4:
+                    boolean valido2;
+                    do{
+                        valido2 = true;
+                        System.out.println("0- Voltar");
+                        System.out.println("1- Pesquisar por dia");
+                        System.out.println("2- Pesquisar por mês");
+                        System.out.println("3- Pesquisar por ano");
+                        switch (sc.nextInt()) {
+                            case 0:
+                                break;
+                            case 1:
+                                System.out.println("Digite o dia em dois digitos");
+                                int dia = sc.nextInt();
+                                System.out.println("Digite o mês dois digitos");
+                                int mes = sc.nextInt();
+                                System.out.println("Digite o ano em quatro digitos");
+                                int ano = sc.nextInt();
+                                Date data = new Date(dia, mes, ano);
+
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            default:
+                                System.out.println("Opção inválida. Digite novamente.");
+                                valido2 = false;
+                        }
+                    }while (!valido2);
+                    break;
+
+                default:
+                    System.out.println("Opção inválida. Digite novamente.");
+                    valido = false;
+                    break;
+            }
+        }while (!valido);
+    }
+
+    private void metodo5() {
+        System.out.println("--------------------------------------------");
+        System.out.println("Digite de qual departamento deseja excluir o custo:");
+        System.out.println("1 - RH \n2 - Compras \n3 - Vendas \n4 - TI \n5 - Engenharia");
+        System.out.println("--------------------------------------------");
+        int opcao5= sc.nextInt();
+        removerCusto(empresa.getDepartamentos().get(opcao5-1));
+        todosCustos(empresa.getDepartamentos().get(opcao5-1));
+    }
+
+    private void metodo6() {
+        //consultar painel
+        System.out.println("--------------------------------------------");
+        System.out.println("O que deseja consultar?");
+        System.out.println("1 - Custos \n2 - Funcionários");
+        System.out.println("--------------------------------------------");
+        int consultas= sc.nextInt();
+        switch(consultas) {
+            case 1:
+                System.out.println("--------------------------------------------");
+                System.out.println("Digite qual departamento deseja consultar:");
+                System.out.println("1 - RH \n2 - Compras \n3 - Vendas \n4 - TI \n5 - Engenharia");
+                System.out.println("--------------------------------------------");
+                int opcao6 = sc.nextInt();
+                todosCustos(empresa.getDepartamentos().get(opcao6 - 1));
+                break;
+            case 2:
+                todosFuncionarios();
+                break;
+        }
+    }
+
     private void menu() {
         System.out.println("--------------------------------------------");
         System.out.println("1 - Escolher funcionário logado");
         System.out.println("2 - Adicionar funcionário");
         System.out.println("3 - Adicionar registro de custo");
-        System.out.println("4 - Pesquisar registro de custo");
+        System.out.println("4 - Pesquisar registro de custos");
         System.out.println("5 - Excluir registro de custo mais recente");
         System.out.println("6 - Consultar painel de dados");
         System.out.println("0 - Sair");
@@ -255,17 +307,15 @@ public class Sistema {
         }
     }
 
-    //ARRUMAR:
-
-//    public <T> ArrayList<Custo> pesquisaCusto(T elemento) {
-//        ArrayList<Custo> custos = new ArrayList<>();
-//        for(Custo custo : empresa.getCustosTotais()){
-//            if(custo.getDescricao().equals(descricao) )
-//                custos.add(custo);
-//        }
-//        custos.sort(Comparator.comparing(Custo::getData));
-//        return custos;
-//    }
+    private ArrayList<Custo> pesquisaCustoDescricao(String descricao) {
+        ArrayList<Custo> custos = new ArrayList<>();
+        for(Custo custo : empresa.getCustosTotais()){
+            if(custo.getCategoria().equals(descricao))
+                custos.add(custo);
+        }
+        custos.sort(Comparator.comparing(Custo::getData));
+        return custos;
+    }
 
     private ArrayList<Custo> pesquisaCustoCategoria(String categoria) {
         ArrayList<Custo> custos = new ArrayList<>();
@@ -287,13 +337,13 @@ public class Sistema {
         return custos;
     }
 
-//    public ArrayList<Custo> pesquisaCustoDepartamento(Departamento departamento) {
-//        ArrayList<Custo> custos = new ArrayList<>();
-//        for(Custo custo : empresa.getCustosTotais()){
-//            if(custo.getDepartamento().equals(departamento))
-//                custos.add(custo);
-//        }
-//        return custos;
-//    }
+    private ArrayList<Custo> pesquisaCustoDepartamento(String nome) {
+        ArrayList<Custo> custos = new ArrayList<>();
+        for(Custo custo : empresa.getCustosTotais()){
+            if(custo.getDepartamento().getNome().equals(nome))
+                custos.add(custo);
+        }
+        custos.sort(Comparator.comparing(Custo::getData));
+        return custos;
+    }
 }
-
