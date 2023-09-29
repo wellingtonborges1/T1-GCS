@@ -200,42 +200,55 @@ public class Sistema {
             System.out.println(custo.toString());
         }
     }
-    private ArrayList<Custo> pesquisaCustoDescricao(String descricao) {
+//    private ArrayList<Custo> pesquisaCustoDescricao(String descricao) {
+//        ArrayList<Custo> custos = new ArrayList<>();
+//        for(Custo custo : empresa.getCustosTotais()){
+//            if(custo.getDescricao().equals(descricao) )
+//                custos.add(custo);
+//        }
+//        custos.sort(Comparator.comparing(Custo::getData));
+//        return custos;
+//    }
+//
+//    private ArrayList<Custo> pesquisaCustoCategoria(String categoria) {
+//        ArrayList<Custo> custos = new ArrayList<>();
+//        for(Custo custo : empresa.getCustosTotais()){
+//            if(custo.getCategoria().equals(categoria))
+//                custos.add(custo);
+//        }
+//        custos.sort(Comparator.comparing(Custo::getData));
+//        return custos;
+//    }
+//
+//    private ArrayList<Custo> pesquisaCustoData(Date data) {
+//        ArrayList<Custo> custos = new ArrayList<>();
+//        for(Custo custo : empresa.getCustosTotais()){
+//            if(custo.getData().equals(data))
+//                custos.add(custo);
+//        }
+//        custos.sort(Comparator.comparing(Custo::getData));
+//        return custos;
+//    }
+//
+//    private ArrayList<Custo> pesquisaCustoDepartamento(Departamento departamento) {
+//        ArrayList<Custo> custos = new ArrayList<>();
+//        for(Custo custo : empresa.getCustosTotais()){
+//            if(custo.getDepartamento().equals(departamento))
+//                custos.add(custo);
+//        }
+//        custos.sort(Comparator.comparing(Custo::getData));
+//        return custos;
+//    }
+    private <T> ArrayList<Custo> pesquisaCusto(T elemento){
         ArrayList<Custo> custos = new ArrayList<>();
         for(Custo custo : empresa.getCustosTotais()){
-            if(custo.getDescricao().equals(descricao) )
+            if(custo.getDescricao().equals(elemento) ||
+            custo.getCategoria().equals(elemento) ||
+            custo.getData() == elemento ||
+            custo.getDepartamento().getNome().equals(elemento))
                 custos.add(custo);
         }
-        custos.sort(Comparator.comparing(Custo::getData));
-        return custos;
-    }
 
-    private ArrayList<Custo> pesquisaCustoCategoria(String categoria) {
-        ArrayList<Custo> custos = new ArrayList<>();
-        for(Custo custo : empresa.getCustosTotais()){
-            if(custo.getCategoria().equals(categoria))
-                custos.add(custo);
-        }
-        custos.sort(Comparator.comparing(Custo::getData));
-        return custos;
-    }
-
-    private ArrayList<Custo> pesquisaCustoData(Date data) {
-        ArrayList<Custo> custos = new ArrayList<>();
-        for(Custo custo : empresa.getCustosTotais()){
-            if(custo.getData().equals(data))
-                custos.add(custo);
-        }
-        custos.sort(Comparator.comparing(Custo::getData));
-        return custos;
-    }
-
-    private ArrayList<Custo> pesquisaCustoDepartamento(Departamento departamento) {
-        ArrayList<Custo> custos = new ArrayList<>();
-        for(Custo custo : empresa.getCustosTotais()){
-            if(custo.getDepartamento().equals(departamento))
-                custos.add(custo);
-        }
         custos.sort(Comparator.comparing(Custo::getData));
         return custos;
     }
