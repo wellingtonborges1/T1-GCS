@@ -359,9 +359,8 @@ public class Sistema {
     }
 
         public void imprimeTodosFuncionarios(){
-        int i = 0;
         for(Funcionario f : empresa.getFuncionarios()){
-            System.out.printf("%d: %s\n", i+1, f.getNome());
+            System.out.printf("Matricula: %d, Nome: %s, Departamento: %s.\n", f.getMatricula(), f.getNome(), f.getDepartamento().getNome());
         }
     }
 }
