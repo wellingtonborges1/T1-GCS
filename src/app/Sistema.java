@@ -17,11 +17,11 @@ public class Sistema {
     public Sistema() {
         this.empresa = new Empresa();
         sc = new Scanner(System.in);
-        Departamento rh = new Departamento("RH");
-        Departamento compras = new Departamento("compras");
-        Departamento vendas = new Departamento("vendas");
-        Departamento ti = new Departamento("TI");
-        Departamento engenharia = new Departamento("engenharia");
+        empresa.getDepartamentos().add(new Departamento("RH"));
+        empresa.getDepartamentos().add(new Departamento("compras"));
+        empresa.getDepartamentos().add(new Departamento("vendas"));
+        empresa.getDepartamentos().add(new Departamento("TI"));
+        empresa.getDepartamentos().add(new Departamento("engenharia"));
     }
 
     public void executa() {
@@ -46,9 +46,16 @@ public class Sistema {
                     sc.nextLine();
                     System.out.println("Informe o nome do funcionário");
                     String nome = sc.nextLine();
-                    System.out.println("Informe o departamento do funcionário");
-                    //pesquisar departamento
-                    //adicionar funcionário
+
+                    Departamento d;
+                    //repete se o departamento passado nao existir
+                    do {
+                        System.out.println("Informe o nome do departamento do funcionário");
+                        String nomeDepartamento = sc.nextLine();
+                        d = pesquisarDepartamento(nomeDepartamento);
+                    } while(d == null);
+
+                    adicionarFuncionario(new Funcionario(matricula, nome, d));
                     break;
                 case 3:
                     //adicionar custo
@@ -126,6 +133,12 @@ public class Sistema {
     }
 
     private boolean logar(int matricula) {
+        //verifica se a lista esta vazia
+        if(empresa.getFuncionarios().isEmpty()) {
+            System.out.println("Não existe nenhum funcionário na empresa.");
+            return false;
+        }
+
         Funcionario f = pesquisarFuncionario(matricula);
 
         if(f.getLog()) {
@@ -133,9 +146,8 @@ public class Sistema {
            return true;
         } else {
             for (Funcionario funcionario : empresa.getFuncionarios()) {
-                if(isLogged(funcionario)) {
+                if(isLogged(funcionario))
                     funcionario.setLog(false);
-                }
             }
         }
         System.out.println("Funcionario logado com sucesso!");
@@ -148,6 +160,17 @@ public class Sistema {
             if(f.getMatricula() == matricula)
                 return f;
         }
+        return null;
+    }
+
+    //MANIPULACAO DE DEPARTAMENTOS
+
+    private Departamento pesquisarDepartamento(String nome) {
+        for(Departamento d : empresa.getDepartamentos()) {
+            if(d.getNome().equals(nome))
+                return d;
+        }
+        System.out.println("Departamento inexistente. Tente novamente");
         return null;
     }
 
