@@ -208,12 +208,19 @@ public class Sistema {
     }
 
     private void adicionarFuncionario(Funcionario funcionario){
+        boolean funcExistente = false;
+
         for(Funcionario f : empresa.getFuncionarios()){
             if(f.getMatricula() == funcionario.getMatricula())
                 System.out.println("Funcionário já existe na empresa");
+                funcExistente = true;
         }
-        empresa.getFuncionarios().add(funcionario);
-        funcionario.getDepartamento().getFuncionarios().add(funcionario);
+
+        if(!funcExistente){
+            empresa.getFuncionarios().add(funcionario);
+            funcionario.getDepartamento().getFuncionarios().add(funcionario);
+            System.out.println("Funcionário adicionado com sucesso");
+        }
     }
 
     private void todosFuncionarios() {
