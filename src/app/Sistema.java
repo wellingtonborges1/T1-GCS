@@ -73,7 +73,7 @@ public class Sistema {
                     todosCustos(empresa.getDepartamentos().get(opcao5-1));
                     break;
                 case 6:
-                    //consultar painel
+                     //consultar painel
                     System.out.println("--------------------------------------------");
                     System.out.println("O que deseja consultar?");
                     System.out.println("1 - Custos \n2 - Funcionários");
@@ -90,8 +90,10 @@ public class Sistema {
                         break;
                         case 2:
                         todosFuncionarios();
+                        break;
                     }
-                    break;
+                break;
+                    
                 case 0:
                     //encerrando
                     break;
