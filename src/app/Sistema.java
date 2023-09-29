@@ -73,8 +73,26 @@ public class Sistema {
                     todosCustos(empresa.getDepartamentos().get(opcao5-1));
                     break;
                 case 6:
-                    //consultar painel
-                    break;
+                     //consultar painel
+                    System.out.println("--------------------------------------------");
+                    System.out.println("O que deseja consultar?");
+                    System.out.println("1 - Custos \n2 - Funcionários");
+                    System.out.println("--------------------------------------------");
+                    int consultas= sc.nextInt();
+                    switch(consultas){
+                        case 1:
+                        System.out.println("--------------------------------------------");
+                        System.out.println("Digite qual departamento deseja consultar:");
+                        System.out.println("1 - RH \n2 - Compras \n3 - Vendas \n4 - TI \n5 - Engenharia");
+                        System.out.println("--------------------------------------------");
+                        int opcao6= sc.nextInt();
+                        todosCustos(empresa.getDepartamentos().get(opcao6-1));
+                        break;
+                        case 2:
+                        todosFuncionarios();
+                        break;
+                    }
+                break;
                 case 0:
                     //encerrando
                     break;
