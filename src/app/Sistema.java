@@ -64,26 +64,16 @@ public class Sistema {
                     break;
                 case 5:
                     //excluir custo
+                    System.out.println("--------------------------------------------");
+                    System.out.println("Digite de qual departamento deseja excluir o custo:");
+                    System.out.println("1 - RH \n2 - Compras \n3 - Vendas \n4 - TI \n5 - Engenharia");
+                    System.out.println("--------------------------------------------");
+                    int opcao5= sc.nextInt();
+                    removerCusto(empresa.getDepartamentos().get(opcao5-1));
+                    todosCustos(empresa.getDepartamentos().get(opcao5-1));
                     break;
                 case 6:
                     //consultar painel
-                    System.out.println("--------------------------------------------");
-                    System.out.println("O que deseja consultar?");
-                    System.out.println("1 - Custos \n2 - Funcionários");
-                    System.out.println("--------------------------------------------");
-                    int consultas= sc.nextInt();
-                    switch(consultas){
-                        case 1:
-                        System.out.println("--------------------------------------------");
-                        System.out.println("Digite qual departamento deseja consultar:");
-                        System.out.println("1 - RH \n2 - Compras \n3 - Vendas \n4 - TI \n5 - Engenharia");
-                        System.out.println("--------------------------------------------");
-                        int opcao6= sc.nextInt();
-                        todosCustos(empresa.getDepartamentos().get(opcao6));
-                        break;
-                        case 2:
-                        todosFuncionarios();
-                    }
                     break;
                 case 0:
                     //encerrando
