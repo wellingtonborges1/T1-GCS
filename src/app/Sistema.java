@@ -181,7 +181,7 @@ public class Sistema {
             System.out.println(custo.toString());
         }
     }
-    public ArrayList<Custo> pesquisaCustoDescricao(String descricao) {
+    public <T> ArrayList<Custo> pesquisaCusto(T elemento) {
         ArrayList<Custo> custos = new ArrayList<>();
         for(Custo custo : empresa.getCustosTotais()){
             if(custo.getDescricao().equals(descricao) )
@@ -217,7 +217,6 @@ public class Sistema {
             if(custo.getDepartamento().equals(departamento))
                 custos.add(custo);
         }
-        custos.sort(Comparator.comparing(Custo::getData));
         return custos;
     }
 
