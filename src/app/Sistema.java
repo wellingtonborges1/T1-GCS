@@ -126,6 +126,12 @@ public class Sistema {
     }
 
     private boolean logar(int matricula) {
+        //verifica se a lista esta vazia
+        if(empresa.getFuncionarios().isEmpty()) {
+            System.out.println("Não existe nenhum funcionário na empresa.");
+            return false;
+        }
+
         Funcionario f = pesquisarFuncionario(matricula);
 
         if(f.getLog()) {
@@ -133,9 +139,8 @@ public class Sistema {
            return true;
         } else {
             for (Funcionario funcionario : empresa.getFuncionarios()) {
-                if(isLogged(funcionario)) {
+                if(isLogged(funcionario))
                     funcionario.setLog(false);
-                }
             }
         }
         System.out.println("Funcionario logado com sucesso!");
