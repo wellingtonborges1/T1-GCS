@@ -62,6 +62,45 @@ public class Sistema {
                     break;
                 case 4:
                     //pesquisar custo
+                        System.out.println("""
+                                -----------------
+                                menu:
+                                
+                                1- pesquisa data
+                                2- pesquisa descricao
+                                3- pesquisa departamento
+                                4- pesquisa categoria
+                                5- fechar menu 
+                                -----------------
+                                """);
+                        int op = sc.nextInt();
+
+                        switch(op){
+
+                            case 1:
+                            int pesqData = pesquisaCustoData();
+                            break;
+
+                            case 2:
+                                String pesqDesc = pesquisaCustoDescricao();
+                                break;
+
+                            case 3:
+                                String pesqDepart = pesquisaCustoDepartamento();
+                                break;
+
+                            case 4:
+                                String pesqCateg = pesquisaCustoCategoria();
+                                break;
+
+
+                            case 5:
+                                System.out.println("menu fechado");
+                                break;
+                        }
+
+
+
                     break;
                 case 5:
                     //excluir custo
