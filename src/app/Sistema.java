@@ -26,7 +26,6 @@ public class Sistema {
 
     public void executa() {
         int opcao;
-
         do {
             menu();
             opcao = sc.nextInt();
@@ -57,10 +56,22 @@ public class Sistema {
                     break;
                 case 6:
                     //consultar painel
+                    System.out.println("Digite qual departamento deseja consultar:");
+                    System.out.println("1- RH \n2-Compras \n3-Vendas \n4-TI \n5-Engenharia");
+                    int opcao6= sc.nextInt();
+                    switch(opcao6){
+                        case 1:
+                        System.out.println("O que deseja consultar?");
+                        System.out.println("1- Custos \n2-Funcionários");
+                        int cf= sc.nextInt();
+                        switch(cf){
+                            case 1:
+                        }
+                        
+                    }
                     break;
                 case 0:
                     //encerrando
-                    //lucas blaco
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
