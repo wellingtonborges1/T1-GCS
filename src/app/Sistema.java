@@ -49,6 +49,10 @@ public class Sistema {
                 case 6:
                     metodo6();
                     break;
+                case 7:
+                    // Mostrar painel
+                    mostrarPainel();
+                    break;
                 case 9:
                     imprimeTodosFuncionarios();
                     break;
@@ -362,5 +366,89 @@ public class Sistema {
         for(Funcionario f : empresa.getFuncionarios()){
             System.out.printf("Matricula: %d, Nome: %s, Departamento: %s.\n", f.getMatricula(), f.getNome(), f.getDepartamento().getNome());
         }
+            private void mostrarPainel() {
+    Funcionario funcionarioLogado = funcionarioLogado();
+
+    if (funcionarioLogado == null) {
+        System.out.println("Nenhum funcionário está logado.");
+        return;
+    }
+
+    // a) Funcionário logado
+    System.out.println("a) Funcionário atualmente logado:");
+    System.out.println(funcionarioLogado().getNome());
+
+    // b) Valor total dos custos do mês atual
+    double custosMesAtual = calcularCustosMesAtual();
+    System.out.println("b) Valor total dos custos do mês atual: R$" + custosMesAtual);
+
+    // c) Valor total dos custos dos últimos 3 meses, por departamento
+    System.out.println("c) Valor total dos custos dos últimos 3 meses, por departamento:");
+    calcularCustosUltimosTresMeses();
+
+    // d) Os 3 funcionários com a maior soma de custos registrados
+    System.out.println("d) Os 3 funcionários com a maior soma de custos registrados:");
+    listarTopFuncionarios();
+}
+private double calcularCustosMesAtual() {
+    // Obtém a data atual
+    Date dataAtual = new Date();
+
+    // Inicializa o total de custos do mês atual
+    double totalCustosMesAtual = 0.0;
+
+    for (Custo custo : empresa.getCustosTotais()) {
+        // Verifica se o custo pertence ao mês atual
+        if (custo.getData().getYear() == dataAtual.getYear() && custo.getData().getMonth() == dataAtual.getMonth()) {
+            totalCustosMesAtual += custo.getValor();
+        }
+    }
+
+    return totalCustosMesAtual;
+}
+b) Calcular o valor total dos custos dos últimos 3 meses por departamento:
+private void calcularCustosUltimosTresMeses() {
+    // Obtém a data atual
+    Date dataAtual = new Date();
+
+    for (Departamento departamento : empresa.getDepartamentos()) {
+        double totalCustosUltimosTresMeses = 0.0;
+
+        for (Custo custo : departamento.getCustos()) {
+            // Calcula a diferença em meses entre a data atual e a data do custo
+            int diffMeses = (dataAtual.getYear() - custo.getData().getYear()) * 12 +
+                            (dataAtual.getMonth() - custo.getData().getMonth());
+
+            // Verifica se o custo pertence aos últimos 3 meses
+            if (diffMeses >= 0 && diffMeses <= 2) {
+                totalCustosUltimosTresMeses += custo.getValor();
+            }
+        }
+
+        // Imprime o total de custos do departamento nos últimos 3 meses
+        System.out.println(departamento.getNome() + ": R$" + totalCustosUltimosTresMeses);
+    }
+}
+c) Listar os 3 funcionários com a maior soma de custos registrados:
+private void listarTopFuncionarios() {
+    // Ordena os funcionários por soma de custos em ordem decrescente
+    empresa.getFuncionarios().sort(Comparator.comparingDouble(f -> -somaCustos(f)));
+
+    // Imprime os 3 primeiros funcionários
+    for (int i = 0; i < Math.min(3, empresa.getFuncionarios().size()); i++) {
+        Funcionario funcionario = empresa.getFuncionarios().get(i);
+        System.out.println(funcionario.getNome() + ": R$" + somaCustos(funcionario));
+    }
+}https://github.com/wellingtonborges1/T1-GCS.git
+
+private double somaCustos(Funcionario funcionario) {
+    double totalCustos = 0.0;
+
+    for (Custo custo : funcionario.getDepartamento().getCustos()) {
+        totalCustos += custo.getValor();
+    }
+
+    return totalCustos;
+}
     }
 }
